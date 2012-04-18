@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <!-- http://localhost:8080/demo.hw.server-1.0/api/soap/hello_world?wsdl -->
+    <jaxws:server id="soapService" serviceClass="beginning.ios.webservices.tutorial.services.soap.AddressBookService" address="/addressBook/soap">
+        <jaxws:serviceBean>
+            <bean class="beginning.ios.webservices.tutorial.services.soap.AddressBookServiceImpl"/>
+        </jaxws:serviceBean>
+    </jaxws:server>
+
+    <!-- http://localhost:8080/server-1.0/addressBook/rest/person -->
+    <jaxrs:server id="restService" address="/addressBook/rest">
+        <jaxrs:serviceBeans>
+            <bean class="beginning.ios.webservices.tutorial.services.rest.AddressBookResource"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- http://localhost:8080/server-1.0/addressBook/protobuf/person -->
+    <jaxrs:server id="protobufService" address="/addressBook/protobuf">
+        <jaxrs:serviceBeans>
+            <bean class="beginning.ios.webservices.tutorial.services.pb.AddressBookServiceProtocolBuffer"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean class="eu.barkode.jaxrs.protobuf.GoogleJaxbProtobufProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <!-- http://localhost:8080/server-1.0/addressBook/protobuf/person -->
+    <jaxrs:server id="plistService" address="/addressBook/plist">
+        <jaxrs:serviceBeans>
+            <bean class="beginning.ios.webservices.tutorial.services.plist.AddressBookServiceBinaryPList"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean class="eu.barkode.jaxrs.plist.BinaryPListJaxbProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+</beans>
