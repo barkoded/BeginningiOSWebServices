@@ -47,10 +47,10 @@
 - (void) operation:(AddressBookServiceServiceSoapBindingOperation *)operation completedWithResponse:(AddressBookServiceServiceSoapBindingResponse *)response
 {
     [[UIApplication sharedApplication] bkd_popNetworkActivity];
-       
+
     NSArray *responseHeaders = response.headers;
     NSArray *responseBodyParts = response.bodyParts;
-    
+
     for(id header in responseHeaders) {
         // here do what you want with the headers, if there's anything of value in them
     }
@@ -61,7 +61,7 @@
          ****/
         if ([bodyPart isKindOfClass:[SOAPFault class]]) {
             // You can get the error like this:
-            NSLog(@"Fault: %@", ((SOAPFault *)bodyPart).simpleFaultString);
+            DLog(@"Fault: %@", ((SOAPFault *)bodyPart).simpleFaultString);
             continue;
         }
         
@@ -71,13 +71,14 @@
         if([bodyPart isKindOfClass:[AddressBookServiceServiceSvc_getPersonResponse class]]) {
             AddressBookServiceServiceSvc_getPersonResponse *body = (AddressBookServiceServiceSvc_getPersonResponse*)bodyPart;
             
-            DLog(@"Succeeded! Received SOAP %@", body.description);
-            self.textView.text = [NSString stringWithFormat:@"%@", body.description];
-
             AddressBookServiceServiceSvc_person *p = [body return_];
-            
+
             self.person = [[BKDPerson alloc] initWithSOAPAttributes:p];
-            DLog(@"Succeeded! Created person based on SOAP %@", person);
+            DLog(@"Succeeded! Created person based on SOAP %@", self.person);
+            
+            DLog(@"Succeeded! Received SOAP %@", response);
+            self.textView.text = [NSString stringWithFormat:@"%@", self.person];
+
             continue;
         }
     }

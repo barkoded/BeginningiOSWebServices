@@ -3,6 +3,7 @@
 #import "UIApplication+BKDNetworkActivity.h"
 
 #import "AFJSONRequestOperation.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @interface BKDJSONViewController ()
 @property (nonatomic, retain) NSMutableData *receivedData;
@@ -95,9 +96,12 @@
     } else {
         // Inform the user that the connection failed.
     }
+    [[UIApplication sharedApplication] bkd_pushNetworkActivity];
 
- 
-    /*
+/*
+    //
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];    
+    //
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
@@ -109,10 +113,6 @@
         DLog(@"Succeeded! Created person based on JSON %@", person);
     } failure:nil];
     [operation start];
-     */
-    
-    
-    [[UIApplication sharedApplication] bkd_pushNetworkActivity];
-
+*/    
 }
 @end

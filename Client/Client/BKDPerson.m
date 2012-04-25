@@ -25,13 +25,6 @@
 {
     self = [super init];
     if (self) {
-        
-        NSLog(@"id : %@", [person id_]);
-        NSLog(@"name : %@", [person name]);
-        NSLog(@"email : %@", [person email]);
-        NSLog(@"phone : %@", [[person phoneNumber] phoneNumber]);
-        NSLog(@"type : %i", [[person phoneNumber] type]);
-        
         identifier = [[person id_] copy];
         name = [[person name] copy];
         email = [[person email] copy];
